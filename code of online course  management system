@@ -1,0 +1,134 @@
+class Course
+{
+    private String courseId;
+    private String courseName;
+    private String duration;
+
+    Course(String id, String name, String d)
+    {
+        courseId = id;
+        courseName = name;
+        duration = d;
+    }
+
+    String getCourseId()
+    {
+        return courseId;
+    }
+
+    String getCourseName()
+    {
+        return courseName;
+    }
+
+    void showCourse()
+    {
+        System.out.println("Course ID : " + courseId);
+        System.out.println("Course Name : " + courseName);
+        System.out.println("Duration : " + duration);
+    }
+}
+
+class Student
+{
+    private String studentName;
+    private String studentId;
+
+    Course courses[] = new Course[5];
+    int progress[] = new int[5];
+    int count = 0;
+
+    Student(String n, String id)
+    {
+        studentName = n;
+        studentId = id;
+    }
+
+    void enroll(Course c)
+    {
+        courses[count] = c;
+        progress[count] = 0;
+        count++;
+
+        System.out.println(studentName +
+                " enrolled in " +
+                c.getCourseName());
+    }
+
+    void updateProgress(String cid, int p)
+    {
+        for(int i=0; i<count; i++)
+        {
+            if(courses[i].getCourseId().equals(cid))
+            {
+                progress[i] = p;
+            }
+        }
+    }
+
+    void display()
+    {
+        System.out.println("\nStudent Name : " + studentName);
+        System.out.println("Student ID : " + studentId);
+
+        for(int i=0; i<count; i++)
+        {
+            System.out.println(
+                    courses[i].getCourseName()
+                    + " Progress : "
+                    + progress[i] + "%"
+            );
+        }
+    }
+}
+
+public class CourseSystem
+{
+    public static void main(String args[])
+    {
+        Course c1 = new Course(
+                "C101",
+                "Java Programming",
+                "3 Months"
+        );
+
+        Course c2 = new Course(
+                "C102",
+                "Python",
+                "2 Months"
+        );
+
+        Student s1 = new Student(
+                "Rahul",
+                "S101"
+        );
+
+        Student s2 = new Student(
+                "Priya",
+                "S102"
+        );
+
+        s1.enroll(c1);
+        s1.enroll(c2);
+
+        s2.enroll(c1);
+
+        s1.updateProgress("C101",80);
+        s1.updateProgress("C102",60);
+
+        s2.updateProgress("C101",65);
+
+        System.out.println("\n------ Course Details ------");
+
+        c1.showCourse();
+
+        System.out.println();
+
+        c2.showCourse();
+
+        System.out.println("\n------ Student Details ------");
+
+        s1.display();
+        s2.display();
+    }
+}
